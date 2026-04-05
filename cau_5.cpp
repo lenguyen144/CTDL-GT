@@ -52,7 +52,22 @@ public:
 
 	void print();
 
-	void add_to_last(sv data);
+	void add_to_last(sv data) {
+		if (this->last == nullptr) {
+			this->last = new node(data);
+			this->last->next = last;
+
+			return;
+		}
+
+		node* p = new node(data);
+		p->next = last->next;
+
+		last->next = p;
+		last = p;
+
+	}
+
 };
 
 
