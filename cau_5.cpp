@@ -64,6 +64,35 @@ public:
         return merge(left, right);
     }
 };
+class InsertionSortList {
+public:
+    static node* insertionSort(node* head) {
+        if (!head) return head;
+
+        node* sorted = nullptr;
+        node* current = head;
+
+        while (current) {
+            node* next = current->next;
+
+            if (!sorted || current->data.MSSV < sorted->data.MSSV) {
+                current->next = sorted;
+                sorted = current;
+            } else {
+                node* temp = sorted;
+                while (temp->next && temp->next->data.MSSV < current->data.MSSV) {
+                    temp = temp->next;
+                }
+                current->next = temp->next;
+                temp->next = current;
+            }
+
+            current = next;
+        }
+
+        return sorted;
+    }
+};
 
 class Circular_Linked_List {
 private:
@@ -82,17 +111,17 @@ public:
 	}
 
 	~Circular_Linked_List() {
-		node* p = last->next;
-		last->next = nullptr;
-
-		while (p != nullptr) {
-			node* q = p;
-			p = q->next;
-			delete q;
-		}
+	    if (!last) return;
+	
+	    node* p = last->next;
+	    last->next = nullptr;
+	
+	    while (p != nullptr) {
+	        node* q = p;
+	        p = q->next;
+	        delete q;
+	    }
 	}
-
-
 
 	void add_to_last(sv data) {
 		if (this->last == nullptr) {
@@ -143,6 +172,23 @@ public:
         temp->next = head;
         last = temp;
     }
+    //ham sap xep  Insertion sort
+    void sort_insertion_MSSV() {
+	    if (!last || last->next == last) return;
+	
+	    node* head = last->next;
+	    last->next = nullptr;
+	
+	    head = InsertionSortList::insertionSort(head);
+	
+	    node* temp = head;
+	    while (temp->next) {
+	        temp = temp->next;
+	    }
+	
+	    temp->next = head;
+	    last = temp;
+	}
 };
 int main() {
     Circular_Linked_List ds;
@@ -160,6 +206,22 @@ int main() {
 
     std::cout << "\nSau khi sap xep:\n";
     ds.print();
+    Circular_Linked_List ds2;
+
+	ds2.add_to_last(sv("Nguyen Hoa Hau", 20093, 2002, "D20"));
+	ds2.add_to_last(sv("Do Luc Si", 20079, 2000, "D20"));
+	ds2.add_to_last(sv("Ly Minh Tinh", 21085, 2003, "D21"));
+	ds2.add_to_last(sv("Tran Dai Gia", 21096, 2003, "D21"));
+	ds2.add_to_last(sv("Duong Vo Su", 18011, 2000, "D18"));
+	
+	std::cout << "\nInsertion Sort:\n";
+	std::cout << "Truoc:\n";
+	ds2.print();
+	
+	ds2.sort_insertion_MSSV();
+	
+	std::cout << "Sau:\n";
+	ds2.print();
 
 	return 0;
 }
