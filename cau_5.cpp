@@ -280,7 +280,7 @@ public:
 	}
 };
 int main() {
-    // ===== KHOI TAO DU LIEU =====
+    // TAO DU LIEU
     sv ds[] = {
         {"Nguyen Hoa Hau", 20093, 2002, "D20"},
         {"Do Luc Si", 20079, 2000, "D20"},
@@ -289,7 +289,7 @@ int main() {
         {"Duong Vo Su", 18011, 2000, "D18"}
     };
 
-    // ===== DSLK DON =====
+    //  DSLK DON
     Singly_Linked_List d1;
     for (int i = 0; i < 5; i++) {
         d1.add_to_last(ds[i]);
@@ -302,7 +302,7 @@ int main() {
     std::cout << "\n=== DSLK DON SAU MERGE SORT ===\n";
     d1.print();
 
-    // ===== DSLK VONG =====
+    //  DSLK VONG
     Circular_Linked_List d2;
     for (int i = 0; i < 5; i++) {
         d2.add_to_last(ds[i]);
@@ -315,7 +315,7 @@ int main() {
     std::cout << "\n=== DSLK VONG SAU MERGE SORT ===\n";
     d2.print();
 
-    // ===== INSERTION SORT TREN DSLK VONG =====
+    //  INSERTION SORT TREN DSLK VONG 
     Circular_Linked_List d3;
     for (int i = 0; i < 5; i++) {
         d3.add_to_last(ds[i]);
