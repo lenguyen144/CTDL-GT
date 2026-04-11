@@ -21,6 +21,8 @@ struct node {
 	node* next;
 	node(sv x) : data(x), next(nullptr) {}
 };
+
+
 class MergeSortList {
 public:
     static node* merge(node* a, node* b) {
@@ -94,6 +96,93 @@ public:
     }
 };
 
+class Singly_Linked_List {
+private:
+    node* head;
+
+    // tron 2 danh sach da sap xep
+    node* merge(node* a, node* b) {
+        if (!a) return b;
+        if (!b) return a;
+
+        if (a->data.MSSV <= b->data.MSSV) {
+            a->next = merge(a->next, b);
+            return a;
+        } else {
+            b->next = merge(a, b->next);
+            return b;
+        }
+    }
+
+    // tim node giua
+    node* getMiddle(node* head) {
+        if (!head) return head;
+
+        node* slow = head;
+        node* fast = head->next;
+
+        while (fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        return slow;
+    }
+
+    // merge sort
+    node* mergeSort(node* head) {
+        if (!head || !head->next)
+            return head;
+
+        node* mid = getMiddle(head);
+        node* half = mid->next;
+        mid->next = nullptr;
+
+        node* left = mergeSort(head);
+        node* right = mergeSort(half);
+
+        return merge(left, right);
+    }
+
+public:
+    Singly_Linked_List() {
+        head = nullptr;
+    }
+
+    // them vao cuoi
+    void add_to_last(sv data) {
+        node* p = new node(data);
+
+        if (!head) {
+            head = p;
+            return;
+        }
+
+        node* temp = head;
+        while (temp->next) {
+            temp = temp->next;
+        }
+        temp->next = p;
+    }
+
+    // sap xep
+    void sort_MSSV() {
+        head = mergeSort(head);
+    }
+
+    // in danh sach
+    void print() {
+        node* p = head;
+        while (p) {
+           std::cout << p->data.ho_ten << " - "
+                 << p->data.MSSV << " - "
+                 << p->data.nam_sinh << " - "
+                 << p->data.lop << std::endl;
+            p = p->next;
+        }
+    }
+};
+
 class Circular_Linked_List {
 private:
 
@@ -153,7 +242,7 @@ public:
 
 
     // ham sap xep merge sort
-    void sort_MSSV() {
+    void sort_merge_MSSV() {
         if (!last || last->next == last) return;
 
         // cat vong
@@ -191,37 +280,50 @@ public:
 	}
 };
 int main() {
-    Circular_Linked_List ds;
+    // ===== KHOI TAO DU LIEU =====
+    sv ds[] = {
+        {"Nguyen Hoa Hau", 20093, 2002, "D20"},
+        {"Do Luc Si", 20079, 2000, "D20"},
+        {"Ly Minh Tinh", 21085, 2003, "D21"},
+        {"Tran Dai Gia", 21096, 2003, "D21"},
+        {"Duong Vo Su", 18011, 2000, "D18"}
+    };
 
-    ds.add_to_last(sv("Nguyen Hoa Hau", 20093, 2002, "D20"));
-    ds.add_to_last(sv("Do Luc Si", 20079, 2000, "D20"));
-    ds.add_to_last(sv("Ly Minh Tinh", 21085, 2003, "D21"));
-    ds.add_to_last(sv("Tran Dai Gia", 21096, 2003, "D21"));
-    ds.add_to_last(sv("Duong Vo Su", 18011, 2000, "D18"));
+    // ===== DSLK DON =====
+    Singly_Linked_List d1;
+    for (int i = 0; i < 5; i++) {
+        d1.add_to_last(ds[i]);
+    }
 
-    std::cout << "Truoc khi sap xep:\n";
-    ds.print();
+    std::cout << "=== DSLK DON BAN DAU ===\n";
+    d1.print();
 
-    ds.sort_MSSV();
+    d1.sort_MSSV();
+    std::cout << "\n=== DSLK DON SAU MERGE SORT ===\n";
+    d1.print();
 
-    std::cout << "\nSau khi sap xep:\n";
-    ds.print();
-    Circular_Linked_List ds2;
+    // ===== DSLK VONG =====
+    Circular_Linked_List d2;
+    for (int i = 0; i < 5; i++) {
+        d2.add_to_last(ds[i]);
+    }
 
-	ds2.add_to_last(sv("Nguyen Hoa Hau", 20093, 2002, "D20"));
-	ds2.add_to_last(sv("Do Luc Si", 20079, 2000, "D20"));
-	ds2.add_to_last(sv("Ly Minh Tinh", 21085, 2003, "D21"));
-	ds2.add_to_last(sv("Tran Dai Gia", 21096, 2003, "D21"));
-	ds2.add_to_last(sv("Duong Vo Su", 18011, 2000, "D18"));
-	
-	std::cout << "\nInsertion Sort:\n";
-	std::cout << "Truoc:\n";
-	ds2.print();
-	
-	ds2.sort_insertion_MSSV();
-	
-	std::cout << "Sau:\n";
-	ds2.print();
+    std::cout << "\n=== DSLK VONG BAN DAU ===\n";
+    d2.print();
 
-	return 0;
+    d2.sort_merge_MSSV();
+    std::cout << "\n=== DSLK VONG SAU MERGE SORT ===\n";
+    d2.print();
+
+    // ===== INSERTION SORT TREN DSLK VONG =====
+    Circular_Linked_List d3;
+    for (int i = 0; i < 5; i++) {
+        d3.add_to_last(ds[i]);
+    }
+
+    d3.sort_insertion_MSSV();
+    std::cout << "\n=== DSLK VONG SAU INSERTION SORT ===\n";
+    d3.print();
+
+    return 0;
 }
