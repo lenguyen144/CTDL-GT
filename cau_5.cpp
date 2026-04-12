@@ -100,50 +100,6 @@ class Singly_Linked_List {
 private:
     node* head;
 
-    // tron 2 danh sach da sap xep
-    node* merge(node* a, node* b) {
-        if (!a) return b;
-        if (!b) return a;
-
-        if (a->data.MSSV <= b->data.MSSV) {
-            a->next = merge(a->next, b);
-            return a;
-        } else {
-            b->next = merge(a, b->next);
-            return b;
-        }
-    }
-
-    // tim node giua
-    node* getMiddle(node* head) {
-        if (!head) return head;
-
-        node* slow = head;
-        node* fast = head->next;
-
-        while (fast && fast->next) {
-            slow = slow->next;
-            fast = fast->next->next;
-        }
-
-        return slow;
-    }
-
-    // merge sort
-    node* mergeSort(node* head) {
-        if (!head || !head->next)
-            return head;
-
-        node* mid = getMiddle(head);
-        node* half = mid->next;
-        mid->next = nullptr;
-
-        node* left = mergeSort(head);
-        node* right = mergeSort(half);
-
-        return merge(left, right);
-    }
-
 public:
     Singly_Linked_List() {
         head = nullptr;
@@ -167,7 +123,7 @@ public:
 
     // sap xep
     void sort_MSSV() {
-        head = mergeSort(head);
+        head = MergeSortList::mergeSort(head);
     }
 
     // in danh sach
