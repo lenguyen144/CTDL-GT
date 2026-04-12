@@ -125,7 +125,10 @@ public:
     void sort_MSSV() {
         head = MergeSortList::mergeSort(head);
     }
-
+    
+    void sort_insertion_MSSV() {
+    	head = InsertionSortList::insertionSort(head);
+    }
     // in danh sach
     void print() {
         node* p = head;
@@ -270,16 +273,24 @@ int main() {
     d2.sort_merge_MSSV();
     std::cout << "\n=== DSLK VONG SAU MERGE SORT ===\n";
     d2.print();
+    //  INSERTION SORT TREN DSLK DON
+    Singly_Linked_List d3;
+	for (int i = 0; i < 5; i++) {
+    	d3.add_to_last(ds[i]);
+    }
+	std::cout << "\n=== DSLK DON SAU INSERTION SORT ===\n";
+	d3.sort_insertion_MSSV();
+	d3.print();
 
     //  INSERTION SORT TREN DSLK VONG 
-    Circular_Linked_List d3;
+    Circular_Linked_List d4;
     for (int i = 0; i < 5; i++) {
-        d3.add_to_last(ds[i]);
+        d4.add_to_last(ds[i]);
     }
 
-    d3.sort_insertion_MSSV();
+    d4.sort_insertion_MSSV();
     std::cout << "\n=== DSLK VONG SAU INSERTION SORT ===\n";
-    d3.print();
+    d4.print();
 
     return 0;
 }
