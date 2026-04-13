@@ -105,6 +105,14 @@ public:
         head = nullptr;
     }
 
+    ~Singly_Linked_List() {
+        while (head != nullptr) {
+            node* temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+
     // them vao cuoi
     void add_to_last(sv data) {
         node* p = new node(data);
