@@ -2,7 +2,9 @@
 
 
 int p_x_de_quy(int n, int x) {
-	return 0;
+	if(n==0) return 1;
+	if(n==1) return x;
+	return p_x_de_quy(n-1,x)-p_x_de_quy(n-2,x);
 }
 
 
@@ -25,5 +27,6 @@ int p_x_y_ko_de_quy(int n, int x, int y) {
 
 
 int main() {
-	std::cout << "p_x_y_de_quy(n = 10, x = -5, y = 3): " << p_x_y_de_quy(2, -5, 3);
+	std::cout << "p_x_y_de_quy(n = 10, x = -5, y = 3): " << p_x_y_de_quy(2, -5, 3)<<'\n';
+	std::cout<<"p_x_de_quy(n=5 , x=2): "<<p_x_de_quy(5,2)<<'\n';
 }
